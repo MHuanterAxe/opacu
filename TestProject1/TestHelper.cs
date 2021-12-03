@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebAPI01.Domain;
 using WebAPI01.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using WebAPI01.Infrastructure.Repositories;
 
 namespace TestProject1
 {
@@ -23,11 +24,11 @@ namespace TestProject1
             _context.Database.EnsureCreated();
         }
 
-        public PersonRepository PersonRepository
+        public UserRepository PersonRepository
         {
             get
             {
-                return new PersonRepository(_context);
+                return new UserRepository(_context);
             }
         }
     }

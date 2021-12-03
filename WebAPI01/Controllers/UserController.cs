@@ -33,7 +33,7 @@ namespace WebAPI01.API.Controllers
 
         // GET: api/People/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetPerson(int id)
+        public async Task<ActionResult<User>> GetPerson(Guid id)
         {
             //var person = await _context.Persons.FindAsync(id);
             var person = await _userRepository.GetByIdAsync(id);
@@ -47,7 +47,7 @@ namespace WebAPI01.API.Controllers
         // PUT: api/People/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(int id, User person)
+        public async Task<IActionResult> PutPerson(Guid id, User person)
         {
             if (id != person.Id)
             {
@@ -92,7 +92,7 @@ namespace WebAPI01.API.Controllers
 
         // DELETE: api/People/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerson(int id)
+        public async Task<IActionResult> DeletePerson(Guid id)
         {
             //var person = await _context.Persons.FindAsync(id);
             var person = await _userRepository.GetByIdAsync(id);
@@ -108,7 +108,7 @@ namespace WebAPI01.API.Controllers
             return NoContent();
         }
 
-        private bool PersonExists(int id)
+        private bool PersonExists(Guid id)
         {
             return _context.Users.Any(e => e.Id == id);
         }

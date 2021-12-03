@@ -10,8 +10,8 @@ using WebAPI01.Infrastructure;
 namespace WebAPI01.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211203222459_ChangeUserForeignKeyName")]
-    partial class ChangeUserForeignKeyName
+    [Migration("20211203232328_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,7 @@ namespace WebAPI01.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
@@ -69,10 +70,11 @@ namespace WebAPI01.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -158,10 +160,9 @@ namespace WebAPI01.Infrastructure.Migrations
 
             modelBuilder.Entity("WebAPI01.Domain.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -177,7 +178,7 @@ namespace WebAPI01.Infrastructure.Migrations
             modelBuilder.Entity("WebAPI01.Domain.Model.AudioFile", b =>
                 {
                     b.HasOne("WebAPI01.Domain.Model.File", "File")
-                        .WithOne("AudioFile")
+                        .WithOne()
                         .HasForeignKey("WebAPI01.Domain.Model.AudioFile", "FileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -199,7 +200,7 @@ namespace WebAPI01.Infrastructure.Migrations
             modelBuilder.Entity("WebAPI01.Domain.Model.ImageFile", b =>
                 {
                     b.HasOne("WebAPI01.Domain.Model.File", "File")
-                        .WithOne("ImageFile")
+                        .WithOne()
                         .HasForeignKey("WebAPI01.Domain.Model.ImageFile", "FileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -210,7 +211,7 @@ namespace WebAPI01.Infrastructure.Migrations
             modelBuilder.Entity("WebAPI01.Domain.Model.TextFile", b =>
                 {
                     b.HasOne("WebAPI01.Domain.Model.File", "File")
-                        .WithOne("TextFile")
+                        .WithOne()
                         .HasForeignKey("WebAPI01.Domain.Model.TextFile", "FileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -221,23 +222,12 @@ namespace WebAPI01.Infrastructure.Migrations
             modelBuilder.Entity("WebAPI01.Domain.Model.VideoFile", b =>
                 {
                     b.HasOne("WebAPI01.Domain.Model.File", "File")
-                        .WithOne("VideoFile")
+                        .WithOne()
                         .HasForeignKey("WebAPI01.Domain.Model.VideoFile", "FileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("File");
-                });
-
-            modelBuilder.Entity("WebAPI01.Domain.Model.File", b =>
-                {
-                    b.Navigation("AudioFile");
-
-                    b.Navigation("ImageFile");
-
-                    b.Navigation("TextFile");
-
-                    b.Navigation("VideoFile");
                 });
 
             modelBuilder.Entity("WebAPI01.Domain.User", b =>

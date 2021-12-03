@@ -27,7 +27,7 @@ namespace WebAPI01.Infrastructure.Repositories
         {
             return await _context.Users.OrderBy(p => p.LastName).ToListAsync();
         }
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
             return await _context.Users.FindAsync(id);
         }
@@ -42,7 +42,7 @@ namespace WebAPI01.Infrastructure.Repositories
             _context.Entry(existPerson).CurrentValues.SetValues(person);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var person = await _context.Users.FindAsync(id);
             _context.Remove(person);

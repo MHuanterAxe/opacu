@@ -20,13 +20,7 @@ namespace WebAPI01.Domain.Model
         public DateTime CreatedAt { get; set; }
         
         public DateTime UpdatedAt { get; set; }
-        public int UserId{ get; set; }
+        public Guid UserId{ get; set; }
         public User User { get; set; }
-        
-        public TextFile TextFile { get; set; }
-        public ImageFile ImageFile { get; set; }
-        public VideoFile VideoFile { get; set; }
-        public AudioFile AudioFile { get; set; }
-        
     }
 }
