@@ -18,6 +18,13 @@ namespace WebAPI01.Infrastructure
 
         public DbSet<Person> Persons { get; set; }
         
+        public DbSet<ImageFile> ImageFiles { get; set; }
+        
+        public DbSet<VideoFile> VideoFiles { get; set; }
+        
         public DbSet<TextFile> TextFiles { get; set; }
+        
+        public  DbSet<AudioFile> AudioFiles { get; set; }
+
     }
 }
