@@ -35,7 +35,7 @@ namespace WebAPI01.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI01", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Documents APi", Version = "v1" });
             });
             services.AddEntityFrameworkNpgsql();
             services.AddDbContext<Context>(
