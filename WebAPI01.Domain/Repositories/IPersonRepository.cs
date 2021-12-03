@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace WebAPI01.Domain.Repositories
 {
-    public interface IPersonRepository
+    public interface IUserRepository
     {
-        public Task<List<Person>> GetAllAsync();
+        public Task<List<User>> GetAllAsync();
 
-        public Task<Person> GetByIdAsync(int id);
+        public Task<User> GetByIdAsync(int id);
 
-        public Task AddAsync(Person person);
-        public Task UpdateAsync(Person person);
+        public Task AddAsync(User person);
+        public Task UpdateAsync(User person);
         public Task DeleteAsync(int id);
     }
 }

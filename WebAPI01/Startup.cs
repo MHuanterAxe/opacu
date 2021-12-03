@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Npgsql.EntityFrameworkCore;
 using WebAPI01.Domain.Repositories;
 using WebAPI01.Infrastructure;
+using WebAPI01.Infrastructure.Repositories;
 
 namespace WebAPI01.API
 {
@@ -42,7 +43,7 @@ namespace WebAPI01.API
                 options => options.UseNpgsql(Configuration.GetConnectionString("ApplicationConnection"))
             );
 
-            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
