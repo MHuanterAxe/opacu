@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebAPI01.Domain.Model;
 using WebAPI01.Domain.Repositories;
 
@@ -22,8 +23,14 @@ namespace WebAPI01.Infrastructure.Repositories
 
         public async Task<List<File>> GetUserFilesAsync(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
-            return user.Files;
+            if (await _context.Users.AnyAsync(u => u.Id == id))
+            {
+                var files = _context.Files.Where(f => f.UserId == id);
+
+                return await files.ToListAsync();
+            }
+
+            return new List<File>();
         }
 
         public async Task<File> GetByIdAsync(int id)

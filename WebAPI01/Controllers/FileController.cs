@@ -24,7 +24,7 @@ namespace WebAPI01.API.Controllers
         
         [HttpGet]
         [Route("api/users/{userId}/files")]
-        public async Task<ActionResult<IEnumerable<File>>> GetUserFiles(Guid userId)
+        public async Task<ActionResult<List<File>>> GetUserFiles(Guid userId)
         {
             return await _fileRepository.GetUserFilesAsync(userId);
         }
