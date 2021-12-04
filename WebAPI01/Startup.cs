@@ -57,7 +57,7 @@ namespace WebAPI01.API
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
