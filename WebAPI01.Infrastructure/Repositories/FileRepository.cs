@@ -33,24 +33,31 @@ namespace WebAPI01.Infrastructure.Repositories
             return new List<File>();
         }
 
-        public async Task<File> GetByIdAsync(int id)
+        public async Task<File> GetByIdAsync(Guid id)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task AddAsync(File textFile)
+        public async Task<File> AddAsync(File file)
         {
-            throw new System.NotImplementedException();
+            await _context.Files.AddAsync(file);
+            await _context.SaveChangesAsync();
+            return file;
         }
 
-        public async Task UpdateAsync(File textFile)
+        public async Task<File> UpdateAsync(File file)
         {
-            throw new System.NotImplementedException();
+            _context.Files.Update(file);
+            await _context.SaveChangesAsync();
+            return file;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<File> DeleteAsync(Guid id)
         {
-            throw new System.NotImplementedException();
+            var file = await _context.Files.FindAsync(id);
+            _context.Files.Remove(file);
+            await _context.SaveChangesAsync();
+            return file;
         }
     }
 }

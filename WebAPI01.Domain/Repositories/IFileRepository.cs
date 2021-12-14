@@ -11,10 +11,10 @@ namespace WebAPI01.Domain.Repositories
 
         public Task<List<File>> GetUserFilesAsync(Guid id);
 
-        public Task<File> GetByIdAsync(int id);
+        public Task<File> GetByIdAsync(Guid id);
 
-        public Task AddAsync(File textFile);
-        public Task UpdateAsync(File textFile);
-        public Task DeleteAsync(int id);
+        public Task<File> AddAsync(File textFile);
+        public Task<File> UpdateAsync(File textFile);
+        public Task<File> DeleteAsync(Guid id);
     }
 }

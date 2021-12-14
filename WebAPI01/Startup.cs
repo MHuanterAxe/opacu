@@ -9,11 +9,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-
+using Microsoft.Extensions.FileProviders;
 using Npgsql.EntityFrameworkCore;
 using WebAPI01.Domain.Repositories;
 using WebAPI01.Infrastructure;
@@ -55,6 +57,12 @@ namespace WebAPI01.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI01 v1"));
             }
+            
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"static")),
+                RequestPath = new PathString("/static")
+            });
 
             app.UseHttpsRedirection();
             
