@@ -40,17 +40,31 @@ namespace WebAPI01.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Documents APi", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             services.AddEntityFrameworkNpgsql();
             services.AddDbContext<Context>(
                 options => options.UseNpgsql(Configuration.GetConnectionString("ApplicationConnection"))
             );
+
+            
 
             services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+
         {
+            app.UseCors("default");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
