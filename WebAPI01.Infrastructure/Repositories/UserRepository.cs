@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebAPI01.Domain;
 using Microsoft.EntityFrameworkCore;
 using WebAPI01.Domain.Repositories;
+using WebAPI01.Infrastructure.Data;
 
 namespace WebAPI01.Infrastructure.Repositories
 {

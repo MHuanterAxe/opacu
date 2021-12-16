@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WebAPI01.Infrastructure;
+using WebAPI01.Infrastructure.Data;
 
 namespace WebAPI01.Infrastructure.Migrations
 {

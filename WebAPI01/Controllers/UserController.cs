@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI01.Domain;
 using WebAPI01.Infrastructure;
+using WebAPI01.Infrastructure.Data;
 using WebAPI01.Infrastructure.Repositories;
 
 namespace WebAPI01.API.Controllers

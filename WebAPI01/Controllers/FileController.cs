@@ -6,8 +6,10 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI01.API.Services;
 using WebAPI01.Domain.Repositories;
 using WebAPI01.Infrastructure;
+using WebAPI01.Infrastructure.Data;
 using WebAPI01.Infrastructure.Repositories;
 using File = WebAPI01.Domain.Model.File;
 
@@ -16,13 +18,15 @@ namespace WebAPI01.API.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        public Context _context;
-        public IFileRepository _fileRepository;
+        private Context _context;
+        private IFileRepository _fileRepository;
+        private FileUploadService _fileUploadService;
 
-        public FileController(Context context)
+        public FileController(Context context, FileUploadService fileUploadService)
         {
             _context = context;
             _fileRepository = new FileRepository(_context);
+            _fileUploadService = fileUploadService;
         }
 
         [HttpGet]
@@ -43,39 +47,21 @@ namespace WebAPI01.API.Controllers
         {
             try
             {
-                var folderName = Path.Combine("static", "img");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
                 if (file != null)
                 {
-                    var size = file.Length;
-                    var format = file.ContentType;
-                    var fileName = userId.ToString() + "__" + ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
+                    var result = await _fileUploadService.UploadFile(
+                        userId,
+                        file,
+                        title,
+                        description
+                    );
 
-                    await using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
-                    var f = new File()
-                    {
-                        Size = size,
-                        Path = dbPath,
-                        Format = format,
-                        UserId = userId,
-                        Title = title,
-                        Description = description,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
-                    };
-                    await _fileRepository.AddAsync(f);
-
-                    return Ok(f);
+                    return Ok(result);
                 }
-
-                return BadRequest();
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception ex)
             {

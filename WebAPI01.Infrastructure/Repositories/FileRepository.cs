@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebAPI01.Domain.Model;
 using WebAPI01.Domain.Repositories;
+using WebAPI01.Infrastructure.Data;
 
 namespace WebAPI01.Infrastructure.Repositories
 {
@@ -41,6 +42,13 @@ namespace WebAPI01.Infrastructure.Repositories
         public async Task<File> AddAsync(File file)
         {
             await _context.Files.AddAsync(file);
+            await _context.SaveChangesAsync();
+            return file;
+        }
+        
+        public async Task<ImageFile> AddAsync(ImageFile file)
+        {
+            await _context.ImageFiles.AddAsync(file);
             await _context.SaveChangesAsync();
             return file;
         }

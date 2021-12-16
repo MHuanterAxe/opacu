@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebAPI01.Domain;
+﻿using WebAPI01.Domain;
 using Microsoft.EntityFrameworkCore;
 using WebAPI01.Domain.Model;
 
-namespace WebAPI01.Infrastructure
+namespace WebAPI01.Infrastructure.Data
 {
     public class Context : DbContext
     {

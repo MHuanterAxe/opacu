@@ -19,7 +19,10 @@ using Microsoft.Extensions.FileProviders;
 using Npgsql.EntityFrameworkCore;
 using WebAPI01.Domain.Repositories;
 using WebAPI01.Infrastructure;
+using WebAPI01.Infrastructure.Facades;
 using WebAPI01.Infrastructure.Repositories;
+using WebAPI01.API.Services;
+using WebAPI01.Infrastructure.Data;
 
 namespace WebAPI01.API
 {
@@ -35,7 +38,6 @@ namespace WebAPI01.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Documents APi", Version = "v1" });
@@ -54,9 +56,17 @@ namespace WebAPI01.API
                 options => options.UseNpgsql(Configuration.GetConnectionString("ApplicationConnection"))
             );
 
-            
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
+
+            // Services
+            services.AddScoped<FileUploadService>();
+            
+            // Facades
+            services.AddScoped<FileUploadFacade>();
+            
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
