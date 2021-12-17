@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace WebAPI01.Domain.Model
 {
@@ -14,6 +15,7 @@ namespace WebAPI01.Domain.Model
         
         public string Encoding { get; set; }
         
+        [JsonIgnore]
         public Guid FileId { get; set; }
         public File File { get; set; }
     }

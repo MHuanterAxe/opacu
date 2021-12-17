@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebAPI01.Domain.Model
 {
@@ -20,7 +21,11 @@ namespace WebAPI01.Domain.Model
         public DateTime CreatedAt { get; set; }
         
         public DateTime UpdatedAt { get; set; }
+        
+        [JsonIgnore]
         public Guid UserId{ get; set; }
+        
+        [JsonIgnore]
         public virtual User User { get; set; }
     }
 }
