@@ -7,12 +7,12 @@ namespace WebAPI01.Domain.Repositories
 {
     public interface IFileRepository
     {
-        public Task<List<File>> GetAllAsync();
-
         public Task<List<File>> GetUserFilesAsync(Guid id);
+        public Task<List<TextFile>> GetUserTextFilesAsync(Guid id);
+        public Task<List<ImageFile>> GetUserImageFilesAsync(Guid id);
+        public Task<List<VideoFile>> GetUserVideoFilesAsync(Guid id);
+        public Task<List<AudioFile>> GetUserAudioFilesAsync(Guid id);
 
-        public Task<File> GetByIdAsync(Guid id);
-        
         public Task<File> AddAsync(File file);
         public Task<ImageFile> AddAsync(ImageFile file);
         public Task<TextFile> AddAsync(TextFile file);

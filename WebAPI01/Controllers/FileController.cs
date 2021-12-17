@@ -18,15 +18,13 @@ namespace WebAPI01.API.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        private Context _context;
         private IFileRepository _fileRepository;
         private FileUploadService _fileUploadService;
 
-        public FileController(Context context, FileUploadService fileUploadService)
+        public FileController(FileUploadService fileUploadService, IFileRepository fileRepository)
         {
-            _context = context;
-            _fileRepository = new FileRepository(_context);
             _fileUploadService = fileUploadService;
+            _fileRepository = fileRepository;
         }
 
         [HttpGet]

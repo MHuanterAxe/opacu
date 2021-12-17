@@ -17,11 +17,6 @@ namespace WebAPI01.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<File>> GetAllAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<List<File>> GetUserFilesAsync(Guid id)
         {
             if (await _context.Users.AnyAsync(u => u.Id == id))
@@ -34,9 +29,24 @@ namespace WebAPI01.Infrastructure.Repositories
             return new List<File>();
         }
 
-        public async Task<File> GetByIdAsync(Guid id)
+        public async Task<List<TextFile>> GetUserTextFilesAsync(Guid id)
         {
-            throw new System.NotImplementedException();
+            return await _context.TextFiles.Where(f => f.File.UserId == id).ToListAsync();
+        }
+
+        public async Task<List<ImageFile>> GetUserImageFilesAsync(Guid id)
+        {
+            return await _context.ImageFiles.Where(f => f.File.UserId == id).ToListAsync();
+        }
+
+        public async Task<List<VideoFile>> GetUserVideoFilesAsync(Guid id)
+        {
+            return await _context.VideoFiles.Where(f => f.File.UserId == id).ToListAsync();
+        }
+
+        public async Task<List<AudioFile>> GetUserAudioFilesAsync(Guid id)
+        {
+            return await _context.AudioFiles.Where(f => f.File.UserId == id).ToListAsync();
         }
 
         public async Task<File> AddAsync(File file)
