@@ -15,6 +15,9 @@ namespace WebAPI01.Domain.Repositories
         
         public Task<File> AddAsync(File file);
         public Task<ImageFile> AddAsync(ImageFile file);
+        public Task<TextFile> AddAsync(TextFile file);
+        public Task<VideoFile> AddAsync(VideoFile file);
+        public Task<AudioFile> AddAsync(AudioFile file);
         public Task<File> UpdateAsync(File textFile);
         public Task<File> DeleteAsync(Guid id);
     }

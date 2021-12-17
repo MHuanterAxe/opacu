@@ -53,6 +53,27 @@ namespace WebAPI01.Infrastructure.Repositories
             return file;
         }
 
+        public async Task<TextFile> AddAsync(TextFile file)
+        {
+            await _context.TextFiles.AddAsync(file);
+            await _context.SaveChangesAsync();
+            return file;
+        }
+
+        public async Task<VideoFile> AddAsync(VideoFile file)
+        {
+            await _context.VideoFiles.AddAsync(file);
+            await _context.SaveChangesAsync();
+            return file;
+        }
+
+        public async Task<AudioFile> AddAsync(AudioFile file)
+        {
+            await _context.AudioFiles.AddAsync(file);
+            await _context.SaveChangesAsync();
+            return file;
+        }
+
         public async Task<File> UpdateAsync(File file)
         {
             _context.Files.Update(file);
