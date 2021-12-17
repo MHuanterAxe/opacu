@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using WebAPI01.Domain;
 using WebAPI01.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using WebAPI01.API.Services;
+using WebAPI01.Infrastructure.Data;
+using WebAPI01.Infrastructure.Facades;
 using WebAPI01.Infrastructure.Repositories;
 
 namespace TestProject1
@@ -16,7 +19,7 @@ namespace TestProject1
         public TestHelper()
         {
             var builder = new DbContextOptionsBuilder<Context>();
-            builder.UseInMemoryDatabase(databaseName: "PersonDB");
+            builder.UseInMemoryDatabase(databaseName: "DocumentsDB");
 
             var dbContextOptions = builder.Options;
             _context = new Context(dbContextOptions);

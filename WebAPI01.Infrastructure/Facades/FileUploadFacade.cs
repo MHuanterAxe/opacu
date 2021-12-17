@@ -132,7 +132,7 @@ namespace WebAPI01.Infrastructure.Facades
         private static string GetFileName(Guid userId, IFormFile file)
         {
             var fileName = userId.ToString() + "__" +
-                           ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim();
+                           ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             return fileName;
         }
     }
