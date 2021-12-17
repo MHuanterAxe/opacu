@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI01.Domain.Model;
-using WebAPI01.Infrastructure.Repositories;
+using WebAPI01.Domain.Repositories;
 
 namespace WebAPI01.API.Controllers
 {
     [ApiController]
     public class ImageFileController
     {
-        private FileRepository _fileRepository;
+        private IFileRepository _fileRepository;
 
-        public ImageFileController(FileRepository fileRepository)
+        public ImageFileController(IFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }

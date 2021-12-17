@@ -56,7 +56,6 @@ namespace WebAPI01.API
                 options => options.UseNpgsql(Configuration.GetConnectionString("ApplicationConnection"))
             );
 
-
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
 

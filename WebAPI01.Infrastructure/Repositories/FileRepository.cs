@@ -11,7 +11,7 @@ namespace WebAPI01.Infrastructure.Repositories
 {
     public class FileRepository : IFileRepository
     {
-        public Context _context;
+        private readonly Context _context;
         public FileRepository(Context context)
         {
             _context = context;
