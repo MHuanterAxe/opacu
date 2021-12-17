@@ -12,6 +12,7 @@ namespace WebAPI01.Infrastructure.Repositories
     public class FileRepository : IFileRepository
     {
         private readonly Context _context;
+
         public FileRepository(Context context)
         {
             _context = context;
@@ -19,34 +20,58 @@ namespace WebAPI01.Infrastructure.Repositories
 
         public async Task<List<File>> GetUserFilesAsync(Guid id)
         {
-            if (await _context.Users.AnyAsync(u => u.Id == id))
-            {
-                var files = _context.Files.Where(f => f.UserId == id);
-
-                return await files.ToListAsync();
-            }
-
-            return new List<File>();
+            return await _context.Files
+                .Where(f => f.UserId == id)
+                .ToListAsync();
         }
 
         public async Task<List<TextFile>> GetUserTextFilesAsync(Guid id)
         {
-            return await _context.TextFiles.Where(f => f.File.UserId == id).ToListAsync();
+            var files = from textFile in _context.Set<TextFile>().Include(f => f.File)
+                join file in _context.Set<File>() on textFile.FileId equals file.Id
+                orderby file.CreatedAt 
+                where file.UserId == id
+                select textFile;
+
+            return await files.ToListAsync();
         }
 
         public async Task<List<ImageFile>> GetUserImageFilesAsync(Guid id)
         {
-            return await _context.ImageFiles.Where(f => f.File.UserId == id).ToListAsync();
+            // return await _context.ImageFiles
+            //     .Where(f => f.File.UserId == id)
+            //     .Include(f => f.File)
+            //     .ToListAsync();
+
+            var files = from imageFile in _context.Set<ImageFile>().Include(f => f.File)
+                join file in _context.Set<File>() on imageFile.FileId equals file.Id
+                orderby file.CreatedAt
+                where file.UserId == id
+                select imageFile;
+
+            return await files.ToListAsync();
         }
 
         public async Task<List<VideoFile>> GetUserVideoFilesAsync(Guid id)
         {
-            return await _context.VideoFiles.Where(f => f.File.UserId == id).ToListAsync();
+            var files = from videoFile in _context.Set<VideoFile>().Include(f => f.File)
+                join file in _context.Set<File>() on videoFile.FileId equals file.Id
+                orderby file.CreatedAt 
+                where file.UserId == id
+                select videoFile;
+
+            return await files.ToListAsync();
         }
 
         public async Task<List<AudioFile>> GetUserAudioFilesAsync(Guid id)
         {
-            return await _context.AudioFiles.Where(f => f.File.UserId == id).ToListAsync();
+            var files = from audioFile in _context.Set<AudioFile>().Include(f => f.File)
+                join file in _context.Set<File>() on audioFile.FileId equals file.Id
+                orderby file.CreatedAt 
+                where file.UserId == id
+                select audioFile;
+
+            return await files.ToListAsync();
         }
 
         public async Task<File> AddAsync(File file)
@@ -55,7 +80,7 @@ namespace WebAPI01.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return file;
         }
-        
+
         public async Task<ImageFile> AddAsync(ImageFile file)
         {
             await _context.ImageFiles.AddAsync(file);
