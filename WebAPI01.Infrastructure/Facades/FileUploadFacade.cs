@@ -62,11 +62,22 @@ namespace WebAPI01.Infrastructure.Facades
             new Dictionary<FileUploadProperties, List<string>>()
             {
                 {FileUploadProperties.AUDIO, new List<string>() {"audio/mpeg", "audio/flac"}},
-                {FileUploadProperties.TEXT, new List<string>() {"text/txt", "text/doc", "text/pdf"}},
-                {FileUploadProperties.VIDEO, new List<string>() {"video/mpeg", "video/mp4", "video/avi"}},
+                {
+                    FileUploadProperties.TEXT,
+                    new List<string>()
+                    {
+                        "text/txt", "application/pdf", "text/csv", "application/msword",
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        "text/html", ""
+                    }
+                },
+                {FileUploadProperties.VIDEO, new List<string>() {"video/mpeg", "video/mp4", "video/avi", "video/webm"}},
                 {
                     FileUploadProperties.IMAGE,
-                    new List<string>() {"image/png", "image/jpg", "image/jpeg", "image/gif", "image/bmp", "image/webp"}
+                    new List<string>()
+                    {
+                        "image/png", "image/jpg", "image/jpeg", "image/gif", "image/bmp", "image/webp", "image/svg+xml"
+                    }
                 }
             };
 
