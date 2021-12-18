@@ -61,7 +61,11 @@ namespace WebAPI01.Infrastructure.Facades
         public static Dictionary<FileUploadProperties, List<String>> mappings =
             new Dictionary<FileUploadProperties, List<string>>()
             {
-                {FileUploadProperties.AUDIO, new List<string>() {"audio/mpeg", "audio/flac"}},
+                {
+                    FileUploadProperties.AUDIO,
+                    new List<string>()
+                        {"audio/mpeg", "audio/basic", "audio/aac", "audio/mp4", "audio/ogg", "audio/webm"}
+                },
                 {
                     FileUploadProperties.TEXT,
                     new List<string>()
@@ -71,7 +75,7 @@ namespace WebAPI01.Infrastructure.Facades
                         "text/html", ""
                     }
                 },
-                {FileUploadProperties.VIDEO, new List<string>() {"video/mpeg", "video/mp4", "video/avi", "video/webm"}},
+                {FileUploadProperties.VIDEO, new List<string>() {"video/mpeg", "video/mp4", "video/x-msvideo", "video/webm", "video/quicktime"}},
                 {
                     FileUploadProperties.IMAGE,
                     new List<string>()
