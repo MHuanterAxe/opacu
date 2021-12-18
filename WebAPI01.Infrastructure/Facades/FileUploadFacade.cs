@@ -72,7 +72,7 @@ namespace WebAPI01.Infrastructure.Facades
                     {
                         "text/txt", "application/pdf", "text/csv", "application/msword",
                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                        "text/html", ""
+                        "text/html"
                     }
                 },
                 {FileUploadProperties.VIDEO, new List<string>() {"video/mpeg", "video/mp4", "video/x-msvideo", "video/webm", "video/quicktime"}},
