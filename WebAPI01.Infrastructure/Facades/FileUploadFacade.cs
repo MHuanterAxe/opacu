@@ -40,7 +40,7 @@ namespace WebAPI01.Infrastructure.Facades
 
         public static readonly FileUploadProperties OTHER =
             new FileUploadProperties(
-                4,
+                5,
                 ""
             );
 
