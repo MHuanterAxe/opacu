@@ -41,7 +41,7 @@ namespace WebAPI01.Infrastructure.Facades
         public static readonly FileUploadProperties OTHER =
             new FileUploadProperties(
                 5,
-                ""
+                "other"
             );
 
         private FileUploadProperties(int value, String folder)
@@ -96,7 +96,10 @@ namespace WebAPI01.Infrastructure.Facades
         {
             foreach (var pair in mappings)
             {
-                return pair.Value.Contains(mimeType) ? pair.Key : FileUploadProperties.OTHER;
+                if (pair.Value.Contains(mimeType))
+                {
+                    return pair.Key;
+                }
             }
 
             return FileUploadProperties.OTHER;
