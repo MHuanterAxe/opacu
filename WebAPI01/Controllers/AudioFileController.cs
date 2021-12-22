@@ -10,9 +10,9 @@ namespace WebAPI01.API.Controllers
     [ApiController]
     public class AudioFileController
     {
-        private IFileRepository _fileRepository;
+        private IAudioFileRepository _fileRepository;
 
-        public AudioFileController(IFileRepository fileRepository)
+        public AudioFileController(IAudioFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }
@@ -21,7 +21,7 @@ namespace WebAPI01.API.Controllers
         [Route("api/users/{userId}/audio-files")]
         public async Task<ActionResult<List<AudioFile>>> Get(Guid userId)
         {
-            return await _fileRepository.GetUserAudioFilesAsync(userId);
+            return await _fileRepository.GetUserFilesAsync(userId);
         }
     }
 }

@@ -10,9 +10,9 @@ namespace WebAPI01.API.Controllers
     [ApiController]
     public class ImageFileController
     {
-        private IFileRepository _fileRepository;
+        private IImageFileRepository _fileRepository;
 
-        public ImageFileController(IFileRepository fileRepository)
+        public ImageFileController(IImageFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }
@@ -21,7 +21,7 @@ namespace WebAPI01.API.Controllers
         [Route("api/users/{userId}/image-files")]
         public async Task<ActionResult<List<ImageFile>>> Get(Guid userId)
         {
-            return await _fileRepository.GetUserImageFilesAsync(userId);
+            return await _fileRepository.GetUserFilesAsync(userId);
         }
     }
 }

@@ -12,17 +12,32 @@ namespace WebAPI01.API.Services
     {
         private FileUploadFacade _fileUploadFacade;
         private IFileRepository _fileRepository;
+        private ITextFileRepository _textFileRepository;
+        private IImageFileRepository _imageFileRepository;
+        private IVideoFileRepository _videoFileRepository;
+        private IAudioFileRepository _audioFileRepository;
 
-        public FileUploadService(FileUploadFacade fileUploadFacade, IFileRepository fileRepository)
+        public FileUploadService(
+            FileUploadFacade fileUploadFacade,
+            IFileRepository fileRepository,
+            ITextFileRepository textFileRepository,
+            IImageFileRepository imageFileRepository,
+            IVideoFileRepository videoFileRepository,
+            IAudioFileRepository audioFileRepository
+        )
         {
             _fileUploadFacade = fileUploadFacade;
             _fileRepository = fileRepository;
+            _textFileRepository = textFileRepository;
+            _imageFileRepository = imageFileRepository;
+            _videoFileRepository = videoFileRepository;
+            _audioFileRepository = audioFileRepository;
         }
 
         public async Task<File> UploadFile(Guid userId, IFormFile file, String title, String description)
         {
             var (uploadedFile, uploadProperties) = await _fileUploadFacade.Upload(userId, file, title, description);
-            
+
             await _fileRepository.AddAsync(uploadedFile);
 
             await CreateFileRecord(uploadedFile, uploadProperties);
@@ -36,7 +51,7 @@ namespace WebAPI01.API.Services
             {
                 case "img":
                 {
-                    await _fileRepository.AddAsync(new ImageFile()
+                    await _imageFileRepository.AddAsync(new ImageFile()
                     {
                         File = uploadedFile,
                         Resolution = "2333x3213",
@@ -46,7 +61,7 @@ namespace WebAPI01.API.Services
                 }
                 case "audio":
                 {
-                    await _fileRepository.AddAsync(new AudioFile()
+                    await _audioFileRepository.AddAsync(new AudioFile()
                     {
                         File = uploadedFile,
                         Bitrate = 1800,
@@ -56,7 +71,7 @@ namespace WebAPI01.API.Services
                 }
                 case "text":
                 {
-                    await _fileRepository.AddAsync(new TextFile()
+                    await _textFileRepository.AddAsync(new TextFile()
                     {
                         File = uploadedFile,
                         Encoding = "utf-8",
@@ -66,7 +81,7 @@ namespace WebAPI01.API.Services
                 }
                 case "video":
                 {
-                    await _fileRepository.AddAsync(new VideoFile()
+                    await _videoFileRepository.AddAsync(new VideoFile()
                     {
                         File = uploadedFile,
                         Encoding = "pro res",

@@ -25,17 +25,6 @@ namespace WebAPI01.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<TextFile>> GetUserTextFilesAsync(Guid id)
-        {
-            var files = from textFile in _context.Set<TextFile>().Include(f => f.File)
-                join file in _context.Set<File>() on textFile.FileId equals file.Id
-                orderby file.CreatedAt 
-                where file.UserId == id
-                select textFile;
-
-            return await files.ToListAsync();
-        }
-
         public async Task<List<ImageFile>> GetUserImageFilesAsync(Guid id)
         {
             // return await _context.ImageFiles
@@ -81,20 +70,17 @@ namespace WebAPI01.Infrastructure.Repositories
             return file;
         }
 
+        public async Task<File> UpdateAsync(Guid id, File textFile)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ImageFile> AddAsync(ImageFile file)
         {
             await _context.ImageFiles.AddAsync(file);
             await _context.SaveChangesAsync();
             return file;
         }
-
-        public async Task<TextFile> AddAsync(TextFile file)
-        {
-            await _context.TextFiles.AddAsync(file);
-            await _context.SaveChangesAsync();
-            return file;
-        }
-
         public async Task<VideoFile> AddAsync(VideoFile file)
         {
             await _context.VideoFiles.AddAsync(file);

@@ -10,9 +10,9 @@ namespace WebAPI01.API.Controllers
     [ApiController]
     public class VideoFileController
     {
-        private IFileRepository _fileRepository;
+        private IVideoFileRepository _fileRepository;
 
-        public VideoFileController(IFileRepository fileRepository)
+        public VideoFileController(IVideoFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }
@@ -21,7 +21,7 @@ namespace WebAPI01.API.Controllers
         [Route("api/users/{userId}/video-files")]
         public async Task<ActionResult<List<VideoFile>>> Get(Guid userId)
         {
-            return await _fileRepository.GetUserVideoFilesAsync(userId);
+            return await _fileRepository.GetUserFilesAsync(userId);
         }
     }
 }

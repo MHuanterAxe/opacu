@@ -10,9 +10,9 @@ namespace WebAPI01.API.Controllers
     [ApiController]
     public class TextFileController
     {
-        private IFileRepository _fileRepository;
+        private ITextFileRepository _fileRepository;
 
-        public TextFileController(IFileRepository fileRepository)
+        public TextFileController(ITextFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }
@@ -21,7 +21,7 @@ namespace WebAPI01.API.Controllers
         [Route("api/users/{userId}/text-files")]
         public async Task<ActionResult<List<TextFile>>> Get(Guid userId)
         {
-            return await _fileRepository.GetUserTextFilesAsync(userId);
+            return await _fileRepository.GetUserFilesAsync(userId);
         }
     }
 }
