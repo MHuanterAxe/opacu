@@ -66,5 +66,26 @@ namespace WebAPI01.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+
+        [HttpDelete]
+        [Route("api/users/{userId}/files/{fileId}")]
+        public async Task<ActionResult<File>> Delete(Guid userId, Guid fileId)
+        {
+            if (!_fileRepository.Has(fileId))
+            {
+                return new NotFoundResult();
+            }
+
+            if (!_fileRepository.BelongsToUser(userId, fileId))
+            {
+                return new ForbidResult();
+            }
+
+            await _fileUploadService.RemoveFile(fileId);
+            
+            await _fileRepository.DeleteAsync(fileId);
+
+            return new NoContentResult();
+        }
     }
 }

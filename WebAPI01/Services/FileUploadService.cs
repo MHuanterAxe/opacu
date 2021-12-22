@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebAPI01.Domain.Repositories;
@@ -92,6 +93,13 @@ namespace WebAPI01.API.Services
                     break;
                 }
             }
+        }
+
+        public async Task RemoveFile(Guid fileId)
+        {
+            var file = await _fileRepository.GetById(fileId);
+
+            await _fileUploadFacade.Remove(file);
         }
     }
 }

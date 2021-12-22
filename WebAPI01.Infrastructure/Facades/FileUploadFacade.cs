@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using File = WebAPI01.Domain.Model.File;
+using SystemFile = System.IO.File;
 
 namespace WebAPI01.Infrastructure.Facades
 {
@@ -135,11 +136,24 @@ namespace WebAPI01.Infrastructure.Facades
                 UpdatedAt = DateTime.Now,
             }, fileUploadProperties);
         }
+        
+        public async Task<File> Remove(File file)
+        {
+            var pathToDelete = GetPathToDelete(file.Path);
+            SystemFile.Delete(pathToDelete);
+
+            return file;
+        }
 
         private string GetPathToSave(string folderName)
         {
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             return pathToSave;
+        }
+        
+        private string GetPathToDelete(string filePath)
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), filePath);
         }
 
         private string GetFolderName(FileUploadProperties uploadProperties)

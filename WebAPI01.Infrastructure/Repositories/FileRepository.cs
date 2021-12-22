@@ -25,6 +25,11 @@ namespace WebAPI01.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<File> GetById(Guid id)
+        {
+            return await _context.Files.FindAsync(id);
+        }
+
         public async Task<List<ImageFile>> GetUserImageFilesAsync(Guid id)
         {
             // return await _context.ImageFiles

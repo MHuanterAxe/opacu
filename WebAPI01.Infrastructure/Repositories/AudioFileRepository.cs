@@ -27,22 +27,18 @@ namespace WebAPI01.Infrastructure.Repositories
 
             return await files.ToListAsync();
         }
+        
+        
+        public async Task<AudioFile> GetById(Guid id)
+        {
+            return await _context.AudioFiles.FindAsync(id);
+        }
 
         public async Task<AudioFile> AddAsync(AudioFile file)
         {
             await _context.AudioFiles.AddAsync(file);
             await _context.SaveChangesAsync();
             return file;
-        }
-
-        public bool Has(Guid id)
-        {
-            return _context.AudioFiles.Any(f => f.Id == id);
-        }
-
-        public bool BelongsToUser(Guid userId, Guid fileId)
-        {
-            return _context.Files.Any(f => f.Id == fileId && f.UserId == userId);
         }
 
         public async Task<AudioFile> UpdateAsync(Guid id, AudioFile file)

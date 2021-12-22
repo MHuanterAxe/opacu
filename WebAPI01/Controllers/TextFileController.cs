@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI01.Domain.Model;
 using WebAPI01.Domain.Repositories;
+using WebAPI01.Infrastructure.Repositories;
 
 namespace WebAPI01.API.Controllers
 {
@@ -12,9 +13,9 @@ namespace WebAPI01.API.Controllers
     {
         private ITextFileRepository _fileRepository;
 
-        public TextFileController(ITextFileRepository fileRepository)
+        public TextFileController(ITextFileRepository textFileRepository)
         {
-            _fileRepository = fileRepository;
+            _fileRepository = textFileRepository;
         }
 
         [HttpGet]
@@ -22,44 +23,6 @@ namespace WebAPI01.API.Controllers
         public async Task<ActionResult<List<TextFile>>> Get(Guid userId)
         {
             return await _fileRepository.GetUserFilesAsync(userId);
-        }
-        
-        [HttpPatch]
-        [Route("api/users/{userId}/text-files/{fileId}")]
-        public async Task<ActionResult<List<TextFile>>> Update(Guid userId, Guid fileId, TextFile file)
-        {
-            if (!_fileRepository.Has(fileId))
-            {
-                return new NotFoundResult();
-            }
-
-            if (!_fileRepository.BelongsToUser(userId, fileId))
-            {
-                return new ForbidResult();
-            }
-
-            await _fileRepository.UpdateAsync(fileId, file);
-
-            return new AcceptedResult();
-        }
-
-        [HttpDelete]
-        [Route("api/users/{userId}/text-files/{fileId}")]
-        public async Task<ActionResult<List<TextFile>>> Delete(Guid userId, Guid fileId)
-        {
-            if (!_fileRepository.Has(fileId))
-            {
-                return new NotFoundResult();
-            }
-
-            if (!_fileRepository.BelongsToUser(userId, fileId))
-            {
-                return new ForbidResult();
-            }
-
-            await _fileRepository.DeleteAsync(fileId);
-
-            return new NoContentResult();
         }
     }
 }
