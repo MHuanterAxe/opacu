@@ -34,6 +34,16 @@ namespace WebAPI01.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return file;
         }
+        
+        public bool Has(Guid id)
+        {
+            return _context.VideoFiles.Any(f => f.Id == id);
+        }
+
+        public bool BelongsToUser(Guid userId, Guid fileId)
+        {
+            return _context.Files.Any(f => f.Id == fileId && f.UserId == userId);
+        }
 
         public async Task<VideoFile> UpdateAsync(Guid id, VideoFile file)
         {

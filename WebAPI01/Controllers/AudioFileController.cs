@@ -23,5 +23,43 @@ namespace WebAPI01.API.Controllers
         {
             return await _fileRepository.GetUserFilesAsync(userId);
         }
+        
+        [HttpPatch]
+        [Route("api/users/{userId}/audio-files/{fileId}")]
+        public async Task<ActionResult<List<AudioFile>>> Update(Guid userId, Guid fileId, AudioFile file)
+        {
+            if (!_fileRepository.Has(fileId))
+            {
+                return new NotFoundResult();
+            }
+
+            if (!_fileRepository.BelongsToUser(userId, fileId))
+            {
+                return new ForbidResult();
+            }
+
+            await _fileRepository.UpdateAsync(fileId, file);
+
+            return new AcceptedResult();
+        }
+
+        [HttpDelete]
+        [Route("api/users/{userId}/audio-files/{fileId}")]
+        public async Task<ActionResult<List<AudioFile>>> Delete(Guid userId, Guid fileId)
+        {
+            if (!_fileRepository.Has(fileId))
+            {
+                return new NotFoundResult();
+            }
+
+            if (!_fileRepository.BelongsToUser(userId, fileId))
+            {
+                return new ForbidResult();
+            }
+
+            await _fileRepository.DeleteAsync(fileId);
+
+            return new NoContentResult();
+        }
     }
 }

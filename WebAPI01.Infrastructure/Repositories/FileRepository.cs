@@ -40,6 +40,16 @@ namespace WebAPI01.Infrastructure.Repositories
 
             return await files.ToListAsync();
         }
+        
+        public bool Has(Guid id)
+        {
+            return _context.Files.Any(f => f.Id == id);
+        }
+
+        public bool BelongsToUser(Guid userId, Guid fileId)
+        {
+            return _context.Files.Any(f => f.Id == fileId && f.UserId == userId);
+        }
 
         public async Task<List<VideoFile>> GetUserVideoFilesAsync(Guid id)
         {
