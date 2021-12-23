@@ -1,4 +1,6 @@
 using System.IO;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,15 +8,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Npgsql.EntityFrameworkCore;
 using WebAPI01.Domain.Repositories;
 using WebAPI01.Infrastructure;
 using WebAPI01.Infrastructure.Facades;
 using WebAPI01.Infrastructure.Repositories;
 using WebAPI01.API.Services;
+using WebAPI01.Domain.DTO;
+using WebAPI01.Domain.Model;
 using WebAPI01.Infrastructure.Data;
 
 namespace WebAPI01.API
@@ -44,6 +51,17 @@ namespace WebAPI01.API
                 });
             });
 
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AllowNullCollections = true; 
+                cfg.ForAllMaps((map, exp) =>
+                {
+                    foreach (var unmappedPropertyName in map.GetUnmappedPropertyNames())
+                        exp.ForMember(unmappedPropertyName, opt => opt.Ignore());
+                });
+
+                cfg.CreateMap<ImageFile, ImageFileDto>();
+            });
             services.AddEntityFrameworkNpgsql();
             services.AddDbContext<Context>(
                 options => options.UseNpgsql(Configuration.GetConnectionString("ApplicationConnection"))

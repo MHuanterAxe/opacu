@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
 namespace WebAPI01.Domain.Model
