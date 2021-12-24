@@ -30,22 +30,6 @@ namespace WebAPI01.Infrastructure.Repositories
             return await _context.Files.FindAsync(id);
         }
 
-        public async Task<List<ImageFile>> GetUserImageFilesAsync(Guid id)
-        {
-            // return await _context.ImageFiles
-            //     .Where(f => f.File.UserId == id)
-            //     .Include(f => f.File)
-            //     .ToListAsync();
-
-            var files = from imageFile in _context.Set<ImageFile>().Include(f => f.File)
-                join file in _context.Set<File>() on imageFile.FileId equals file.Id
-                orderby file.CreatedAt
-                where file.UserId == id
-                select imageFile;
-
-            return await files.ToListAsync();
-        }
-        
         public bool Has(Guid id)
         {
             return _context.Files.Any(f => f.Id == id);
@@ -56,28 +40,6 @@ namespace WebAPI01.Infrastructure.Repositories
             return _context.Files.Any(f => f.Id == fileId && f.UserId == userId);
         }
 
-        public async Task<List<VideoFile>> GetUserVideoFilesAsync(Guid id)
-        {
-            var files = from videoFile in _context.Set<VideoFile>().Include(f => f.File)
-                join file in _context.Set<File>() on videoFile.FileId equals file.Id
-                orderby file.CreatedAt 
-                where file.UserId == id
-                select videoFile;
-
-            return await files.ToListAsync();
-        }
-
-        public async Task<List<AudioFile>> GetUserAudioFilesAsync(Guid id)
-        {
-            var files = from audioFile in _context.Set<AudioFile>().Include(f => f.File)
-                join file in _context.Set<File>() on audioFile.FileId equals file.Id
-                orderby file.CreatedAt 
-                where file.UserId == id
-                select audioFile;
-
-            return await files.ToListAsync();
-        }
-
         public async Task<File> AddAsync(File file)
         {
             await _context.Files.AddAsync(file);
@@ -85,9 +47,11 @@ namespace WebAPI01.Infrastructure.Repositories
             return file;
         }
 
-        public async Task<File> UpdateAsync(Guid id, File textFile)
+        public async Task<File> UpdateAsync(Guid id, File file)
         {
-            throw new NotImplementedException();
+            _context.Files.Update(file);
+            await _context.SaveChangesAsync();
+            return file;
         }
 
         public async Task<ImageFile> AddAsync(ImageFile file)

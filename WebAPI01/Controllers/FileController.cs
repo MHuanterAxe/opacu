@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI01.API.Services;
+using WebAPI01.Domain.DTO;
 using WebAPI01.Domain.Repositories;
 using WebAPI01.Infrastructure;
 using WebAPI01.Infrastructure.Data;
@@ -65,6 +66,35 @@ namespace WebAPI01.API.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+        
+        [HttpPatch]
+        [Route("api/users/{userId}/files/{fileId}")]
+        public async Task<ActionResult<File>> Update(Guid userId, Guid fileId, [FromBody] FileUpdateDto fileUpdateDto)
+        {
+            if (!_fileRepository.Has(fileId))
+            {
+                return new NotFoundResult();
+            }
+
+            if (!_fileRepository.BelongsToUser(userId, fileId))
+            {
+                return new ForbidResult();
+            }
+
+            var file = await _fileRepository.GetById(fileId);
+            if (fileUpdateDto.Title != null)
+            {
+                file.Title = fileUpdateDto.Title;
+            }
+            if (fileUpdateDto.Description != null)
+            {
+                file.Description = fileUpdateDto.Description;
+            }
+            
+            await _fileRepository.UpdateAsync(fileId, file);
+
+            return new AcceptedResult();
         }
 
         [HttpDelete]

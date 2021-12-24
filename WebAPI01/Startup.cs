@@ -50,18 +50,7 @@ namespace WebAPI01.API
                     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
-
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.AllowNullCollections = true; 
-                cfg.ForAllMaps((map, exp) =>
-                {
-                    foreach (var unmappedPropertyName in map.GetUnmappedPropertyNames())
-                        exp.ForMember(unmappedPropertyName, opt => opt.Ignore());
-                });
-
-                cfg.CreateMap<ImageFile, ImageFileDto>();
-            });
+            
             services.AddEntityFrameworkNpgsql();
             services.AddDbContext<Context>(
                 options => options.UseNpgsql(Configuration.GetConnectionString("ApplicationConnection"))

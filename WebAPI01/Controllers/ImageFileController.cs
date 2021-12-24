@@ -28,28 +28,5 @@ namespace WebAPI01.API.Controllers
         {
             return await _imageFileRepository.GetUserFilesAsync(userId);
         }
-
-        [HttpPatch]
-        [Route("api/users/{userId}/image-files/{fileId}")]
-        public async Task<ActionResult<ImageFile>> Update(Guid userId, Guid fileId, [FromBody] ImageFileDto fileDto)
-        {
-            if (!_imageFileRepository.Has(fileId))
-            {
-                return new NotFoundResult();
-            }
-
-            if (!_imageFileRepository.BelongsToUser(userId, fileId))
-            {
-                return new ForbidResult();
-            }
-
-            var file = await _imageFileRepository.GetById(fileId);
-
-            var newFile =_mapper.Map(fileDto, file);
-            
-            await _imageFileRepository.UpdateAsync(fileId, newFile);
-
-            return new AcceptedResult();
-        }
     }
 }
