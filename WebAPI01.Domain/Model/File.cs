@@ -22,7 +22,6 @@ namespace WebAPI01.Domain.Model
         
         public DateTime UpdatedAt { get; set; }
         
-        [JsonIgnore]
         public Guid UserId{ get; set; }
         
         [JsonIgnore]

@@ -27,6 +27,13 @@ namespace WebAPI01.API.Controllers
             _fileUploadService = fileUploadService;
             _fileRepository = fileRepository;
         }
+        
+        [HttpGet]
+        [Route("api/files")]
+        public async Task<ActionResult<List<File>>> GetFiles()
+        {
+            return await _fileRepository.GetFiles();
+        }
 
         [HttpGet]
         [Route("api/users/{userId}/files")]

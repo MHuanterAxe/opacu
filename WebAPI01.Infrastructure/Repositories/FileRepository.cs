@@ -17,6 +17,12 @@ namespace WebAPI01.Infrastructure.Repositories
         {
             _context = context;
         }
+        
+        public async Task<List<File>> GetFiles()
+        {
+            return await _context.Files
+                .ToListAsync();
+        }
 
         public async Task<List<File>> GetUserFilesAsync(Guid id)
         {
